@@ -23,6 +23,7 @@
             <label for="matchingPassword">Repeat Password</label>
             <input type="text" name="matchingPassword" id="matchingPassword" />
             <button type="submit">Submit</button>
+            <label style="color:red">${message}</label>
         </form>
     </body>
 </html>

@@ -1,12 +1,26 @@
 package com.company.dto;
 
+import com.company.annotation.EmailExist;
+import com.company.annotation.PasswordMatches;
 import com.company.entity.Role;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+@PasswordMatches
+@EmailExist
 public class UserDto {
 
     private int id;
+    @NotEmpty(message = "Please fill the all fields")
+    @Size(min = 2, max = 15, message = "Name size must be between 2 and 15")
     private String name;
+    @Size(min = 3, max = 15, message = "Password size must be between 3 and 15")
+    @NotEmpty(message = "Please fill the all fields")
     private String password;
+    @NotEmpty(message = "Please fill the all fields")
+    private String matchingPassword;
+    @Size(min = 11, max = 45, message = "Email size must be between 11 and 45")
+    @NotEmpty(message = "Please fill the all fields")
     private String email;
     private Double balance;
     private Role role;
@@ -21,6 +35,14 @@ public class UserDto {
     }
 
     public UserDto() {
+    }
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(String matchingPassword) {
+        this.matchingPassword = matchingPassword;
     }
 
     public int getId() {
