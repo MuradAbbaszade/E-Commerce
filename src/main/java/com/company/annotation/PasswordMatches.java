@@ -8,7 +8,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import validator.PasswordMatchesValidator;
+import com.company.validator.PasswordMatchesValidator;
 
 @Target({TYPE,ANNOTATION_TYPE})
 @Retention(RUNTIME)

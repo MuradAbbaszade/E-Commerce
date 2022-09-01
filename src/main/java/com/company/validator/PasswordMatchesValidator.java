@@ -1,4 +1,4 @@
-package validator;
+package com.company.validator;
 
 import com.company.annotation.PasswordMatches;
 import com.company.dto.UserDto;
