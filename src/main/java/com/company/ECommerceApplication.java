@@ -1,7 +1,8 @@
 package com.company;
 
-import com.company.daoInter.ProductDaoInter;
 import com.company.entity.Product;
+import com.company.entity.Role;
+import com.company.entity.User;
 import com.company.service.ProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
+import com.company.repository.ProductRepository;
+import com.company.service.UserService;
+import java.util.Optional;
 
 @ComponentScan
 @Service
@@ -18,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class ECommerceApplication {
 
     @Autowired
-    ProductDaoInter productDao;
+    UserService userService;
     
     public static void main(String[] args) {
         SpringApplication.run(ECommerceApplication.class, args);
@@ -29,10 +33,11 @@ public class ECommerceApplication {
         CommandLineRunner clr = new CommandLineRunner() {
             @Override
             public void run(String... args) {
-                List<Product> products= productDao.getAllProducts();
-                System.out.println(products);
+                User user = new User(1);
+                user.setRole(new Role(1));
+                User user1= userService.save(user);
+                System.out.println(userService.findById(1));
             }
-
         };
         return clr;
     }

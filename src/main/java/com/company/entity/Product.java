@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.company.entity;
 
 import java.io.Serializable;
@@ -20,10 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author roma-cervice
- */
 @Entity
 @Table(name = "product")
 @XmlRootElement
@@ -46,20 +37,28 @@ public class Product implements Serializable {
     private String name;
     @Column(name = "image")
     private String image;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "price")
     private BigDecimal price;
     @Column(name = "description")
     private String description;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
-    private Category categoryId;
+    private Category category;
 
     public Product() {
     }
 
     public Product(Integer id) {
         this.id = id;
+    }
+
+    public Product(Integer id, String name, String image, BigDecimal price, String description, Category category) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.description = description;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -102,12 +101,12 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Category getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Category categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -132,7 +131,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "com.company.entity.Product[ id=" + id + " ]";
+        return "com.company.entity.Product[ id=" + id + " name=" + name + "]";
     }
-    
+
 }

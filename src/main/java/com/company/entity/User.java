@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.company.entity;
 
 import java.io.Serializable;
@@ -19,10 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author roma-cervice
- */
 @Entity
 @Table(name = "user")
 @XmlRootElement
@@ -51,7 +42,7 @@ public class User implements Serializable {
     private Integer balance;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Role roleId;
+    private Role role;
 
     public User() {
     }
@@ -59,6 +50,16 @@ public class User implements Serializable {
     public User(Integer id) {
         this.id = id;
     }
+
+    public User(Integer id, String name, String password, String email, Integer balance, Role role) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.balance = balance;
+        this.role = role;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -100,12 +101,12 @@ public class User implements Serializable {
         this.balance = balance;
     }
 
-    public Role getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Role roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -130,7 +131,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.company.entity.User[ id=" + id + " ]";
+        return "com.company.entity.User[ id=" + id + " name=" + name + "]";
     }
-    
+
 }

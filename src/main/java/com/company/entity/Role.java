@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.company.entity;
 
 import java.io.Serializable;
@@ -21,10 +16,6 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author roma-cervice
- */
 @Entity
 @Table(name = "role")
 @XmlRootElement
@@ -43,7 +34,7 @@ public class Role implements Serializable {
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private List<User> userList;
 
     public Role() {
@@ -105,7 +96,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "com.company.entity.Role[ id=" + id + " ]";
+        return "com.company.entity.Role[ id=" + id + " name=" + name + "]";
     }
-    
+
 }
