@@ -13,6 +13,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Table(name = "user")
@@ -26,6 +29,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "User.findByBalance", query = "SELECT u FROM User u WHERE u.balance = :balance")})
 public class User implements Serializable {
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,12 +62,11 @@ public class User implements Serializable {
     public User(Integer id, String name, String password, String email, Integer balance, Role role) {
         this.id = id;
         this.name = name;
-        this.password = password;
+        this.password = passwordEncoder().encode(password);
         this.email = email;
         this.balance = balance;
         this.role = role;
     }
-    
 
     public Integer getId() {
         return id;
@@ -82,7 +89,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = passwordEncoder().encode(password);
     }
 
     public String getEmail() {
