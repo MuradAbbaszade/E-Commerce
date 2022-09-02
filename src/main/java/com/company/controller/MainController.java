@@ -6,9 +6,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainController {
-    
+
     @GetMapping("main")
-    public ModelAndView showMainPage(){
+    public ModelAndView showMainPage() {
         ModelAndView mv = new ModelAndView("main");
         return mv;
     }
