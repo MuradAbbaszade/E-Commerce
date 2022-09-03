@@ -65,7 +65,9 @@ public class ProductsController {
             @RequestParam(value="id",required=false)int productId){
         ModelAndView mv = new ModelAndView("products");
         if(actionType.equals("Delete")){
+            Product product = productService.findById(productId).get();
             productService.deleteById(productId);
+            products.remove(product);
         }
         mv.addObject("products", products);
         return mv;

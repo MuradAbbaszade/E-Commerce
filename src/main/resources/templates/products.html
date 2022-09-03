@@ -12,7 +12,36 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="style.css" type="text/css"/>
+        <script>
+            function setId(id) {
+                var element = document.getElementById("idForDelete");
+                element.value = id;
+            }
+            // Modal Image Gallery
+            function onClick(element) {
+                document.getElementById("img01").src = element.src;
+                document.getElementById("modal01").style.display = "block";
+                var captionText = document.getElementById("caption");
+                captionText.innerHTML = element.alt;
+            }
 
+
+            // Toggle between showing and hiding the sidebar when clicking the menu icon
+            var mySidebar = document.getElementById("mySidebar");
+
+            function w3_open() {
+                if (mySidebar.style.display === 'block') {
+                    mySidebar.style.display = 'none';
+                } else {
+                    mySidebar.style.display = 'block';
+                }
+            }
+
+            // Close the sidebar with the close button
+            function w3_close() {
+                mySidebar.style.display = "none";
+            }
+        </script>
         <style>
             body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
             * {
@@ -119,8 +148,8 @@
                         <th scope="col">Buy</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr th:each="product: ${products}">
+                <tbody th:each="product: ${products}">
+                    <tr>
                 <input type="hidden" id="id" th:value="${product.id}"/>
                 <td th:text="${product.id}"></td>
                 <td th:text="${product.name}"></td>
@@ -130,7 +159,7 @@
                 <td th:text="${product.description}"></td>
                 <td th:if="${userRole == 'ADMIN'}">
                     <button type="button" class="btn btn-warning">Edit</button>
-                    <button data-toggle="modal" data-target="#exampleModal" onclick="setId()" type="button" class="btn btn-danger">Delete</button>
+                    <button data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:setId(\'' + ${product.id} + '\');'" type="button" class="btn btn-danger">Delete</button>
                 </td>
                 <td th:if="${userRole == 'USER'}"><button type="button" class="btn btn-success">Buy</button></td>
                 </tr>
@@ -157,40 +186,6 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            function setId() {
-                var id = document.getElementById("id").value;
-                alert(id);
-                var element = document.getElementById("idForDelete");
-                element.value = id;
-                alert(element.value);
-            }
-            // Modal Image Gallery
-            function onClick(element) {
-                document.getElementById("img01").src = element.src;
-                document.getElementById("modal01").style.display = "block";
-                var captionText = document.getElementById("caption");
-                captionText.innerHTML = element.alt;
-            }
-
-
-            // Toggle between showing and hiding the sidebar when clicking the menu icon
-            var mySidebar = document.getElementById("mySidebar");
-
-            function w3_open() {
-                if (mySidebar.style.display === 'block') {
-                    mySidebar.style.display = 'none';
-                } else {
-                    mySidebar.style.display = 'block';
-                }
-            }
-
-            // Close the sidebar with the close button
-            function w3_close() {
-                mySidebar.style.display = "none";
-            }
-        </script>
 
     </body>
 </html>
