@@ -127,7 +127,7 @@
 
         <div id="products" class="w3-container" style="padding:128px 16px">
 
-            <td th:if="${userRole == 'ADMIN'}"><a type="button" class="btn btn-success">Add Product</a></td>
+            <td th:if="${userRole == 'ADMIN'}"><a type="button" href="addProduct" class="btn btn-success">Add Product</a></td>
 
             <form class="search" method="GET" action="products" style="margin: auto;max-width: 300px">
                 <input class="search-input" type="text" placeholder="Enter product name.." name="search">

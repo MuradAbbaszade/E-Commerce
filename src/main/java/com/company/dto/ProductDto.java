@@ -6,18 +6,25 @@ public class ProductDto {
     private String image;
     private double price;
     private String category;
-    private CategoryDto categoryDto;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public ProductDto(){
         
     }
-    public ProductDto(int id, String name, String image, double price, String category, CategoryDto categoryDto) {
+    public ProductDto(int id, String name, String image, double price, String category) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
         this.category = category;
-        this.categoryDto = categoryDto;
     }
 
     public int getId() {
@@ -58,13 +65,5 @@ public class ProductDto {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public CategoryDto getCategoryDto() {
-        return categoryDto;
-    }
-
-    public void setCategoryDto(CategoryDto categoryDto) {
-        this.categoryDto = categoryDto;
     }
 }

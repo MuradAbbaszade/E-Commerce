@@ -1,7 +1,11 @@
 package com.company.controller;
 
+import com.company.dto.ProductDto;
+import com.company.dto.UserDto;
+import com.company.entity.Category;
 import com.company.entity.Product;
 import com.company.entity.User;
+import com.company.service.CategoryService;
 import com.company.service.ProductService;
 import com.company.service.RoleService;
 import com.company.service.UserService;
@@ -10,10 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +40,19 @@ public class ProductsController {
     @Autowired
     RoleService roleService;
 
+    @Autowired
+    CategoryService categoryService;
+
     List<Product> products = new ArrayList<Product>();
+
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource
+                = new ReloadableResourceBundleMessageSource();
+
+        messageSource.setBasename("classpath:messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
 
     @GetMapping("/products")
     public ModelAndView showProductPage(@RequestParam(value = "search", required = false) String name,
@@ -38,12 +60,11 @@ public class ProductsController {
         ModelAndView mv = new ModelAndView("products");
         String remoteUserEmail = request.getRemoteUser();
         User u = userService.findByEmail(remoteUserEmail).get(0);
-        
-        if(u.getRole().getName().equals("ADMIN")){
+
+        if (u.getRole().getName().equals("ADMIN")) {
             mv.addObject("userRole", "ADMIN");
-        }
-        else{
-            mv.addObject("userRole","USER");
+        } else {
+            mv.addObject("userRole", "USER");
         }
         if (name != null && !name.trim().equals("")) {
             products = productService.findByName(name);
@@ -59,17 +80,59 @@ public class ProductsController {
         mv.addObject("products", products);
         return mv;
     }
-    
+
     @PostMapping("/products")
-    public ModelAndView showProductPage(@RequestParam(value="button",required=false)String actionType,
-            @RequestParam(value="id",required=false)int productId){
+    public ModelAndView showProductPage(@RequestParam(value = "button", required = false) String actionType,
+            @RequestParam(value = "id", required = false) int productId,
+            HttpServletResponse response) throws IOException {
         ModelAndView mv = new ModelAndView("products");
-        if(actionType.equals("Delete")){
+        if (actionType.equals("Delete")) {
             Product product = productService.findById(productId).get();
             productService.deleteById(productId);
             products.remove(product);
         }
-        mv.addObject("products", products);
+        response.sendRedirect("products");
+        return mv;
+    }
+
+    @GetMapping("/addProduct")
+    public ModelAndView showAddProductsPage() {
+        List<Category> categories = categoryService.findAll();
+        ModelAndView mv = new ModelAndView("addProduct");
+        mv.addObject("categories", categories);
+        return mv;
+    }
+
+    @PostMapping("/addProduct")
+    public ModelAndView showAddProductsPage(@ModelAttribute("product") @Valid ProductDto productDto, BindingResult result,
+            HttpServletRequest request,HttpServletResponse response) throws IOException {
+        try {
+            if (result.hasErrors()) {
+                Object obj = result.getAllErrors().get(0);
+                ObjectError objectError = null;
+                if (obj instanceof ObjectError) {
+                    objectError = (ObjectError) obj;
+                }
+                String message = messageSource().getMessage(objectError, null);
+                throw new Exception(message);
+            }
+        } catch (Exception ex) {
+            ModelAndView mv = new ModelAndView();
+            mv.addObject("message", ex.getMessage());
+            return mv;
+        }
+        
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setImage(productDto.getImage());
+        product.setPrice(productDto.getPrice());
+        product.setDescription(productDto.getDescription());
+        
+        Category category = categoryService.findByName(productDto.getCategory()).get(0);
+        product.setCategory(category);
+        productService.save(product);
+        ModelAndView mv = new ModelAndView("products");
+        response.sendRedirect("products");
         return mv;
     }
 }
