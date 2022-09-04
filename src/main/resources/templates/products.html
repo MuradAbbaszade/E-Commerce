@@ -139,7 +139,6 @@
             <table class="table" style="text-align:center">
                 <thead class="thead-light">
                     <tr>
-                        <th>ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Preview</th>
@@ -151,7 +150,6 @@
                 <tbody th:each="product: ${products}">
                     <tr>
                 <input type="hidden" id="id" th:value="${product.id}"/>
-                <td th:text="${product.id}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.category}"></td>
                 <td><img src="" height="100px" width="100px"  th:src="@{${product.image}}"></td>

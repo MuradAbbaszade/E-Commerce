@@ -1,11 +1,23 @@
 package com.company.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
+
 public class ProductDto {
     private int id;
+    @Size(min=2,max=100,message="Name size must be between 2 and 100")
+    @NotEmpty(message = "Please fill the all fields")
     private String name;
+    @NotEmpty(message = "Please fill the all fields")
     private String image;
+    @NotNull(message = "Please fill the all fields")
     private double price;
+    @NotEmpty(message = "Please fill the all fields")
     private String category;
+    @Size(min=5,max=100,message="Description size must be between 5 and 100")
+    @NotEmpty(message = "Please fill the all fields")
     private String description;
 
     public String getDescription() {

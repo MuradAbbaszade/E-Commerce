@@ -31,6 +31,35 @@
             .w3-bar .w3-button {
                 padding: 16px;
             }
+            #products{
+                margin-top: 120px;
+                margin-left: 480px;
+                background: rgba(200,220,220,0.5);
+                height:550px;
+                width:500px;
+                border-radius: 10px;
+                align-items: center;
+                text-align: center;
+            }
+            #products label{
+                margin-top: 30px;
+                margin-left: 50px;
+            }
+            #products input{
+                margin-left: 30px;
+            }
+            #products select{
+                margin-left: 30px;
+            }
+            #products button{
+                margin-top: 30px;
+                margin-left: 90px;
+            }
+
+            #products a{
+                margin-top: 30px;
+                margin-left: 85px;
+            }
         </style>
     </head>
     <body onload="loadDoc()">
@@ -63,25 +92,27 @@
             <a href="main#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACT</a>
         </nav>
 
-        <div id="products" class="w3-container" style="padding:128px 16px">
-            <form method="POST" action="addProduct">
+        <div id="products" class="w3-container">
+            <h4 style="margin-top:20px">Edit Product</h4>
+            <form method="POST" th:action="@{/edit/__${product.id}__}">
                 <label for="name">Product Name</label>
                 <input id="name" name="name" type="text" th:value="${product.name}"/>
-                
+                <br>
                 <label for="image">Image</label>
-                <input type="file" id="image" name="image" th:value="${product.image}" accept="image/*">
-                
+                <input type="file" id="image" name="image" accept="image/*">
+                <br>
                 <label for="description">Description</label>
                 <input id="description" name="description" th:value="${product.description}" type="text"/>
-                
+                <br>
                 <label for="price">Price</label>
                 <input id="price" name="price" th:value="${product.price}" type="text"/>
-                
+                <br>
                 <label for="category">Category</label>
                 <select name="category" id="category">
-                    <option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
+                    <option th:each="category: ${categories}" th:text="${category}" th:selected="${category==product.category}"></option>
                 </select>
-                
+                <br>
+                <a href="/E-Commerce/products" class="btn btn-danger">Back</a>
                 <button type="submit" name="button" value="addProduct" class="btn btn-success">Save Product</button>
                 <label style="color:red" th:text="${message}"></label>
             </form>

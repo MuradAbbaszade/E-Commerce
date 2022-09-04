@@ -1,6 +1,12 @@
 {
     "elements": {
-        "input": {}
+        "input": {},
+        "form": {
+            "attributes": {
+                "method": {},
+                "action": {}
+            }
+        }
     },
     "attributes": {
         "th:text": {
