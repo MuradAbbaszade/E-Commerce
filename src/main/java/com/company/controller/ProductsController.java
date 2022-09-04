@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -84,7 +85,8 @@ public class ProductsController {
     }
 
     @PostMapping("/products")
-    public ModelAndView showProductPage(@RequestParam(value = "button", required = false) String actionType,
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ModelAndView deleteProduct(@RequestParam(value = "button", required = false) String actionType,
             @RequestParam(value = "id", required = false) int productId,
             HttpServletResponse response) throws IOException {
         ModelAndView mv = new ModelAndView("products");

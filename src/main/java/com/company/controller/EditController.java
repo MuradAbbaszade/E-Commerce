@@ -57,7 +57,7 @@ public class EditController {
     public ModelAndView showEditPage(@ModelAttribute("productDto") @Valid ProductDto productDto, BindingResult result,
             HttpServletResponse response, @PathVariable("id") int id) throws IOException {
         System.out.println(id);
-        System.out.println(productDto.getImage());
+        System.out.println(productDto.getName());
         try {
             if (result.hasErrors()) {
                 Object obj = result.getAllErrors().get(0);
@@ -73,14 +73,14 @@ public class EditController {
             }
         } catch (Exception ex) {
             System.out.println("2");
-            ModelAndView mv = new ModelAndView("/edit/" + id);
+            ModelAndView mv = new ModelAndView("edit");
             Product product = productService.findById(id).get();
             mv.addObject("product", product);
             List<Category> categories = categoryService.findAll();
             mv.addObject("categories", categories);
-            System.out.println(product);
+            System.out.println(product.getName());
             mv.addObject("message", ex.getMessage());
-            System.out.println(categories);
+            System.out.println(categories.get(0).getName());
             return mv;
         }
         Product product = productService.findById(id).get();
