@@ -1,5 +1,6 @@
 package com.company.controller;
 
+import com.company.Cart;
 import com.company.dto.ProductDto;
 import com.company.dto.UserDto;
 import com.company.entity.Category;
@@ -46,6 +47,9 @@ public class ProductsController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    Cart cart;
+
     List<Product> products = new ArrayList<Product>();
 
     public MessageSource messageSource() {
@@ -79,6 +83,7 @@ public class ProductsController {
             mv.addObject("searchInfo", "No results found");
             return mv;
         }
+        mv.addObject("cartSize", cart.getCart().size());
         mv.addObject("searchInfo", "");
         mv.addObject("products", products);
         return mv;
@@ -111,7 +116,7 @@ public class ProductsController {
 
     @PostMapping("addProduct")
     public ModelAndView showAddProductsPage(@ModelAttribute("productDto") @Valid ProductDto productDto, BindingResult result,
-           HttpServletResponse response) throws IOException {
+            HttpServletResponse response) throws IOException {
         try {
             if (result.hasErrors()) {
                 Object obj = result.getAllErrors().get(0);
@@ -120,10 +125,12 @@ public class ProductsController {
                     objectError = (ObjectError) obj;
                 }
                 String message = messageSource().getMessage(objectError, null);
-                if(message.contains("NumberFormatException")) message="Please fill the all fields";
+                if (message.contains("NumberFormatException")) {
+                    message = "Please fill the all fields";
+                }
                 throw new Exception(message);
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ModelAndView mv = new ModelAndView();
             List<Category> categories = categoryService.findAll();
             mv.addObject("categories", categories);

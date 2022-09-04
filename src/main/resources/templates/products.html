@@ -103,6 +103,7 @@
                 <a href="main" class="w3-bar-item w3-button w3-wide">MAIN</a>
                 <!-- Right-sided navbar links -->
                 <div class="w3-right w3-hide-small">
+                    <a href="checkout" class="w3-bar-item w3-button" th:text="'CART:' + ${cartSize}"></a>
                     <a href="main#about" class="w3-bar-item w3-button">ABOUT</a>
                     <a href="main#categories" class="w3-bar-item w3-button"><i class="fa fa-th"></i> CATEGORIES</a>
                     <a href="products" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> PRODUCTS</a>
@@ -144,7 +145,7 @@
                         <th scope="col">Preview</th>
                         <th scope="col">Price</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Buy</th>
+                        <th scope="col"> </th>
                     </tr>
                 </thead>
                 <tbody th:each="product: ${products}">
@@ -159,7 +160,12 @@
                     <a type="button"  th:href="@{'edit/' + ${product.id}}" class="btn btn-warning">Edit</a>
                     <button data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:setId(\'' + ${product.id} + '\');'" type="button" class="btn btn-danger">Delete</button>
                 </td>
-                <td th:if="${userRole == 'USER'}"><button type="button" class="btn btn-success">Buy</button></td>
+                <td th:if="${userRole == 'USER'}">
+                    <form th:action="@{'checkout/' + ${product.id}}" method="GET">
+                        <button type="submit" value="Buy" class="btn btn-success">Buy</button>
+                        <a th:href="@{'cart?id=' + ${product.id}}" class="btn btn-info">Add to cart</a>
+                    </form>
+                </td>
                 </tr>
                 </tbody>
             </table>

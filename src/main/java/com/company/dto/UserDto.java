@@ -22,15 +22,13 @@ public class UserDto {
     @Size(min = 11, max = 45, message = "Email size must be between 11 and 45")
     @NotEmpty(message = "Please fill the all fields")
     private String email;
-    private Double balance;
     private Role role;
 
-    public UserDto(int id, String name, String password, String email, Double balance, Role role) {
+    public UserDto(int id, String name, String password, String email, Role role) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.balance = balance;
         this.role = role;
     }
 
@@ -75,14 +73,6 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
     }
 
     public Role getRole() {

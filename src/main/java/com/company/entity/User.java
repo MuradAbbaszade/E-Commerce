@@ -25,8 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
     , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
     , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByBalance", query = "SELECT u FROM User u WHERE u.balance = :balance")})
+    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
 public class User implements Serializable {
 
     @Bean
@@ -46,8 +45,6 @@ public class User implements Serializable {
     private String password;
     @Column(name = "email")
     private String email;
-    @Column(name = "balance")
-    private Integer balance;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Role role;
@@ -59,12 +56,11 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String name, String password, String email, Integer balance, Role role) {
+    public User(Integer id, String name, String password, String email, Role role) {
         this.id = id;
         this.name = name;
         this.password = passwordEncoder().encode(password);
         this.email = email;
-        this.balance = balance;
         this.role = role;
     }
 
@@ -98,14 +94,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Integer balance) {
-        this.balance = balance;
     }
 
     public Role getRole() {

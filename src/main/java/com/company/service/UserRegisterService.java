@@ -19,7 +19,6 @@ public class UserRegisterService implements IUserRegisterService {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        user.setBalance(0);
         user.setRole(roleService.findById(1).get());
         return userService.save(user);
     }
