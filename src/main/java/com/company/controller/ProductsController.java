@@ -1,15 +1,9 @@
 package com.company.controller;
 
 import com.company.Cart;
-import com.company.dto.ProductDto;
-import com.company.dto.UserDto;
-import com.company.entity.Category;
-import com.company.entity.Product;
-import com.company.entity.User;
-import com.company.service.CategoryService;
-import com.company.service.ProductService;
-import com.company.service.RoleService;
-import com.company.service.UserService;
+import com.company.dto.*;
+import com.company.entity.*;
+import com.company.service.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +13,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,6 +76,7 @@ public class ProductsController {
             mv.addObject("searchInfo", "No results found");
             return mv;
         }
+        mv.addObject("cart", cart.getCart());
         mv.addObject("cartSize", cart.getCart().size());
         mv.addObject("searchInfo", "");
         mv.addObject("products", products);

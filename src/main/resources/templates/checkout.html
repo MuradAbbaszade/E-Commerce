@@ -40,7 +40,7 @@
                                         <td th:text="${product.name}"></td>
                                         <td th:text="${product.category}"></td>
                                         <td th:text="${product.description}"></td>
-                                        <td><img height="100px" width="100px"  th:src="@{${product.image}}"></td>
+                                        <td><img height="100px"  th:src="@{${product.image}}"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -51,14 +51,21 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Image</th>
+                                <th scope="col">Preview</th>
+                                <th scope="col"></th>
                                 </thead>
                                 <tbody th:each="product: ${cart}">
                                     <tr>
                                         <td th:text="${product.name}"></td>
                                         <td th:text="${product.category}"></td>
                                         <td th:text="${product.description}"></td>
-                                        <td><img height="100px" width="100px"  th:src="@{${product.image}}"></td>
+                                        <td><img height="100px"  th:src="@{${product.image}}"></td>
+                                        <td>
+                                            <form action="cart" method="POST">
+                                                <input type="hidden" th:value="${product.id}" name="id"/>
+                                                <button class="btn btn-danger" style="background-color:transparent"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -69,7 +76,10 @@
                             </label> <label class="radio"> <input type="radio" name="gender" value="FEMALE">
                                 <div class="d-flex justify-content-between"> <span>MASTER CARD</span> <span>**** 5069</span> </div>
                             </label> </div>
-                        <div class="buttons"> <button class="btn btn-success btn-block">Proceed to payment</button> </div>
+                        <div class="buttons"> 
+                            <button class="btn btn-success btn-block">Proceed to payment</button>
+                            <a href="products" style="margin-top:10px" class="btn btn-danger">Back</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-2"> </div>
