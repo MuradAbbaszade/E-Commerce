@@ -55,8 +55,10 @@ public class ProductsController {
     }
 
     @GetMapping("/products")
-    public ModelAndView showProductPage(@RequestParam(value = "search", required = false) String name,
+    public ModelAndView showProductPage(@RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "search", required = false) String name,
             HttpServletRequest request) throws IOException {
+        List<Category> categories = categoryService.findAll();
         ModelAndView mv = new ModelAndView("products");
         String remoteUserEmail = request.getRemoteUser();
         User u = userService.findByEmail(remoteUserEmail).get(0);
@@ -67,15 +69,25 @@ public class ProductsController {
             mv.addObject("userRole", "USER");
         }
         if (name != null && !name.trim().equals("")) {
-            products = productService.findByName(name);
+            if (category == null) {
+                products = productService.findByName(name);
+            } else {
+                products = productService.findByCategoryAndName(name, category);
+            }
         } else {
-            products = productService.findAll();
+            if (category == null) {
+                products = productService.findAll();
+            } else {
+                products = productService.findByCategory(category);
+            }
         }
         if (products.size() == 0) {
+            mv.addObject("categories", categories);
             mv.addObject("products", products);
             mv.addObject("searchInfo", "No results found");
             return mv;
         }
+        mv.addObject("categories", categories);
         mv.addObject("cart", cart.getCart());
         mv.addObject("cartSize", cart.getCart().size());
         mv.addObject("searchInfo", "");

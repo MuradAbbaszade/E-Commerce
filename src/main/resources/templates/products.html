@@ -133,6 +133,10 @@
             <form class="search" method="GET" action="products" style="margin: auto;max-width: 300px">
                 <input class="search-input" type="text" placeholder="Enter product name.." name="search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+                <select class="form-select" name="category" id="category">
+                    <option value="all">All</option>
+                    <option th:each="category: ${categories}" th:value="${category}" th:text="${category}"></option>
+                </select>
                 <br>
             </form>
             <label style="color:red" th:text="${searchInfo}"></label>
