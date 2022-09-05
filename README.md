@@ -22,7 +22,7 @@ Add Product(Admin)
 ![addProduct](https://user-images.githubusercontent.com/98694275/188326397-d28bfc89-349e-4637-8fd4-ef2879bfb27f.png)
 
 Products Page(User)
-![bu](https://user-images.githubusercontent.com/98694275/188326414-d87c850e-e040-43c8-946f-20badc9cc3da.png)
+![searchProduct](https://user-images.githubusercontent.com/98694275/188481436-07f0e132-8ca7-468d-9ade-5b0d393bdf75.png)
 
 Payment Page(User)
 ![payment](https://user-images.githubusercontent.com/98694275/188326540-02761348-99bc-4e60-8553-4a1323bdab41.png)
